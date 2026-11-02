@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Franciszek Glab | Developer & Hardware Builder</title>
+  <meta name="description" content="Portfolio of Franciszek Glab - 15-year-old developer and hardware tinkerer from Helsinki. Ready for Junction 2026.">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { hacker: '#00ff66', darkBg: '#0a0a0f', cardBg: '#12121a' },
+          fontFamily: { mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'] },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+          },
+          animation: { float: 'float 6s ease-in-out infinite' }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { background-image: radial-gradient(rgba(0,255,102,0.06) 1px, transparent 1px); background-size: 28px 28px; }
+    .glass {
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .glow-card { position: relative; overflow: hidden; transition: transform .3s ease, border-color .3s ease; }
+    .glow-card::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+      background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(0,255,102,0.16), transparent 45%);
+    }
+    .glow-card:hover::before { opacity: 1; }
+    .glow-card:hover { transform: translateY(-4px); border-color: rgba(0,255,102,0.45); box-shadow: 0 0 30px -10px rgba(0,255,102,0.45); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .cursor { display: inline-block; width: 8px; height: 1.1em; background: #00ff66; vertical-align: text-bottom; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .term-scroll::-webkit-scrollbar { width: 6px; }
+    .term-scroll::-webkit-scrollbar-thumb { background: #1f2a24; border-radius: 3px; }
+    .chip { transition: all .25s ease; }
+    .chip:hover { color: #00ff66; border-color: rgba(0,255,102,.6); background: rgba(0,255,102,.08); transform: translateY(-2px); }
+    .text-glow { text-shadow: 0 0 18px rgba(0,255,102,.45); }
+    .img-slot { background: repeating-linear-gradient(45deg, rgba(255,255,255,.02) 0 10px, rgba(255,255,255,.04) 10px 20px); }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+  </style>
+</head>
+
+<body class="bg-darkBg text-gray-300 font-mono min-h-screen selection:bg-hacker selection:text-black antialiased">
+
+<!-- Ambient glows -->
+<div class="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[320px] bg-hacker/5 blur-[130px] pointer-events-none rounded-full"></div>
+<div class="fixed bottom-0 right-0 w-[400px] h-[400px] bg-hacker/5 blur-[140px] pointer-events-none rounded-full"></div>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 glass border-x-0 border-t-0">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="#top" class="text-white font-bold tracking-tight">franciszek<span class="text-hacker">@</span>glab<span class="text-hacker">:~$</span></a>
+    <div class="hidden md:flex gap-6 text-xs uppercase tracking-widest text-gray-400">
+      <a href="#about" class="hover:text-hacker transition">About</a>
+      <a href="#projects" class="hover:text-hacker transition">Projects</a>
+      <a href="#stack" class="hover:text-hacker transition">Stack</a>
+      <a href="#junction" class="hover:text-hacker transition">Junction</a>
+      <a href="#contact" class="hover:text-hacker transition">Contact</a>
+    </div>
+    <button id="menuBtn" class="md:hidden text-hacker" aria-label="Menu"><i data-lucide="menu" class="w-6 h-6"></i></button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3 text-sm uppercase tracking-widest text-gray-400">
+    <a href="#about" class="hover:text-hacker">About</a>
+    <a href="#projects" class="hover:text-hacker">Projects</a>
+    <a href="#stack" class="hover:text-hacker">Stack</a>
+    <a href="#junction" class="hover:text-hacker">Junction</a>
+    <a href="#contact" class="hover:text-hacker">Contact</a>
+  </div>
+</nav>
+
+<main id="top" class="max-w-5xl mx-auto px-6 pt-28 pb-16 relative z-10">
+
+  <!-- HERO / TERMINAL -->
+  <section class="mb-24">
+    <div class="inline-block px-3 py-1 bg-hacker/10 border border-hacker/30 text-hacker text-xs rounded-full mb-5">
+      &gt; status: ready_for_junction_2026
+    </div>
+    <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-3">
+      Franciszek <span class="text-hacker text-glow">Glab</span>
+    </h1>
+    <p class="text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed mb-8">
+      15-year-old builder from Helsinki. Passionate about electronics and programming.
+    </p>
+
+    <!-- Terminal window -->
+    <div class="glass rounded-xl overflow-hidden shadow-[0_0_60px_-20px_rgba(0,255,102,0.35)] border border-hacker/20">
+      <div class="flex items-center justify-between px-4 py-2.5 bg-black/60 border-b border-white/10 text-xs">
+        <div class="flex items-center gap-2 text-hacker font-bold">
+          <i data-lucide="terminal" class="w-4 h-4"></i>
+          <span>bash — franciszek@glab:~</span>
+        </div>
+        <div class="text-[10px] text-gray-500 uppercase tracking-widest">tty1</div>
+      </div>
+      <div id="terminal" class="term-scroll p-4 md:p-6 h-[360px] overflow-y-auto text-sm leading-relaxed" onclick="document.getElementById('termInput').focus()">
+        <div id="termOutput"></div>
+        <div id="termPromptRow" class="hidden items-center">
+          <span class="text-hacker mr-2 shrink-0">franciszek@glab:~$</span>
+          <input id="termInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+                 class="flex-1 min-w-0 bg-transparent outline-none text-white caret-hacker" aria-label="Terminal input">
+        </div>
+        <div id="typingRow" class="flex items-center"><span class="text-hacker mr-2 shrink-0">franciszek@glab:~$</span><span id="typing" class="text-white"></span><span class="cursor ml-0.5"></span></div>
+      </div>
+      <div class="px-4 py-2 bg-black/40 border-t border-white/10 text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
+        <span>try:</span>
+        <button data-cmd="help" class="cmd text-hacker hover:underline">help</button>
+        <button data-cmd="about" class="cmd text-hacker hover:underline">about</button>
+        <button data-cmd="list --skills" class="cmd text-hacker hover:underline">list --skills</button>
+        <button data-cmd="projects" class="cmd text-hacker hover:underline">projects</button>
+        <button data-cmd="junction" class="cmd text-hacker hover:underline">junction</button>
+        <button data-cmd="contact" class="cmd text-hacker hover:underline">contact</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="mb-24 reveal">
+    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <i data-lucide="user" class="w-4 h-4 text-hacker"></i> About Me
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 glass glow-card rounded-xl p-6 md:p-8">
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Hi, I'm <span class="text-white font-bold">Franciszek</span>. I live in Helsinki and I'm intersted in electronics and coding.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          I write firmware for <span class="text-hacker">Arduino</span> boards, wire up sensors and actuators, design parts in CAD and bring them to life on <span class="text-hacker">3D printer</span>. Then I connect everything with software - scripts, dashboards and small web tools - so that devices can talk to each other (hello, IoT).
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          My loop is simple: <span class="text-white">idea → prototype → print → flash → break → fix</span>. Right now I'm ready for the Junction hackathon.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
+        <div class="glass glow-card rounded-xl p-5">
+          <i data-lucide="cpu" class="w-5 h-5 text-hacker mb-2"></i>
+          <div class="text-white font-bold">Embedded</div>
+          <div class="text-xs text-gray-500">Arduino, sensors, ESP32</div>
+        </div>
+        <div class="glass glow-card rounded-xl p-5">
+          <i data-lucide="box" class="w-5 h-5 text-hacker mb-2"></i>
+          <div class="text-white font-bold">3D Printing</div>
+          <div class="text-xs text-gray-500">CAD → STL → real parts</div>
+        </div>
+        <div class="glass glow-card rounded-xl p-5 col-span-2 md:col-span-1">
+          <i data-lucide="wifi" class="w-5 h-5 text-hacker mb-2"></i>
+          <div class="text-white font-bold">IoT</div>
+          <div class="text-xs text-gray-500">Connecting devices & data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="mb-24 reveal">
+    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <i data-lucide="folder-code" class="w-4 h-4 text-hacker"></i> Featured Projects
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Project 1 (real) -->
+      <article class="glass glow-card rounded-xl overflow-hidden group">
+        <img src="coin-capsule-holder.jpg" alt="coin capsule holder 3d print" class="w-full h-44 object-cover border-b border-white/5">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-white group-hover:text-hacker transition">Coin Capsule Holder</h3>
+            <a href="https://github.com/franek-creator/coin-capsule-holder" target="_blank" rel="noopener" class="text-gray-500 hover:text-hacker transition" aria-label="Open repository"><i data-lucide="external-link" class="w-5 h-5"></i></a>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">Custom 3D-printed holder designed for displaying 5 coin capsules. Parametric, printable without supports.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="chip px-2 py-1 text-xs border border-gray-700 rounded">3D Printing</span>
+            <span class="chip px-2 py-1 text-xs border border-gray-700 rounded">CAD</span>
+            <span class="chip px-2 py-1 text-xs border border-gray-700 rounded">Hardware</span>
+          </div>
+          <a href="https://github.com/franek-creator/coin-capsule-holder" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 text-xs text-hacker border border-hacker/40 rounded-lg hover:bg-hacker hover:text-black transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack" class="mb-24 reveal">
+    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <i data-lucide="layers" class="w-4 h-4 text-hacker"></i> Tech Stack
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass glow-card rounded-xl p-6">
+        <h3 class="flex items-center gap-2 text-white font-bold mb-4"><i data-lucide="cpu" class="w-5 h-5 text-hacker"></i> Hardware & Embedded</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Arduino</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Sensors & actuators</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Breadboard / circuits</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">3D Printing</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">CAD modeling</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">IoT</span>
+        </div>
+      </div>
+      <div class="glass glow-card rounded-xl p-6">
+        <h3 class="flex items-center gap-2 text-white font-bold mb-4"><i data-lucide="code-2" class="w-5 h-5 text-hacker"></i> Languages</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Python</span>
+        </div>
+      </div>
+      <div class="glass glow-card rounded-xl p-6">
+        <h3 class="flex items-center gap-2 text-white font-bold mb-4"><i data-lucide="wrench" class="w-5 h-5 text-hacker"></i> Tools & Workflow</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">GitHub</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">VS Code</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Arduino IDE</span>
+          <span class="chip px-3 py-1 text-xs border border-gray-700 rounded">Slicer software</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JUNCTION 2026 -->
+  <section id="junction" class="mb-24 reveal">
+    <div class="relative glass rounded-2xl p-8 md:p-12 border-hacker/30 overflow-hidden shadow-[0_0_80px_-30px_rgba(0,255,102,0.5)]">
+      <div class="absolute -top-20 -right-20 w-72 h-72 bg-hacker/10 blur-[90px] rounded-full pointer-events-none animate-float"></div>
+      <div class="relative">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-hacker/10 border border-hacker/30 text-hacker text-xs rounded-full mb-5">
+          <span class="w-2 h-2 rounded-full bg-hacker animate-pulse"></span> team: secured (ready to build)
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Junction <span class="text-hacker text-glow">2026</span></h2>
+        <p class="text-gray-300 max-w-2xl leading-relaxed mb-6">
+          I'm officially attending Junction 2026 with a team!
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-8">
+          <div class="rounded-lg border border-white/10 bg-black/30 p-4">
+            <i data-lucide="shield-check" class="w-5 h-5 text-hacker mb-2"></i>
+            <div class="text-white text-sm font-bold">Status</div>
+            <div class="text-xs text-gray-500 mt-1">Team secured, locked in and ready for the hackathon weekend.</div>
+          </div>
+        </div>
+
+        <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 bg-hacker text-black font-bold rounded-lg hover:shadow-[0_0_30px_rgba(0,255,102,.6)] hover:-translate-y-0.5 transition">
+          <i data-lucide="mail" class="w-4 h-4"></i> Get in touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="mb-8 reveal">
+    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <i data-lucide="send" class="w-4 h-4 text-hacker"></i> Contact
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <a href="https://github.com/franek-creator" target="_blank" rel="noopener" class="glass glow-card rounded-xl p-5 flex items-center gap-4">
+        <svg class="w-6 h-6 text-hacker" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        <div><div class="text-white font-bold">GitHub</div><div class="text-xs text-gray-500">github.com/franek-creator</div></div>
+      
+
+      <a href="mailto:franciszekcreator@gmail.com" class="glass glow-card rounded-xl p-5 flex items-center gap-4">
+        <i data-lucide="mail" class="w-6 h-6 text-hacker"></i>
+        <div><div class="text-white font-bold">E-mail</div><div class="text-xs text-gray-500">franciszekcreator@gmail.com</div></div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-800/80 py-8 text-center text-xs text-gray-600 relative z-10">
+  <p>&copy; <span id="year"></span> Franciszek Glab · Helsinki, Finland</p>
+  <p class="mt-1 text-hacker/70">&gt; see you at Junction_</p>
+</footer>
+
+<script>
+  lucide.createIcons();
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu toggle
+  const mobileMenu = document.getElementById('mobileMenu');
+  document.getElementById('menuBtn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  // Mouse-follow glow on cards
+  document.querySelectorAll('.glow-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---------- Interactive terminal ----------
+  const out = document.getElementById('termOutput');
+  const term = document.getElementById('terminal');
+  const input = document.getElementById('termInput');
+  const promptRow = document.getElementById('termPromptRow');
+  const typingRow = document.getElementById('typingRow');
+  const typingEl = document.getElementById('typing');
+  const PROMPT = 'franciszek@glab:~$';
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  let busy = true;
+  const history = []; let hIdx = 0;
+
+  const G = t => `<span class="text-hacker">${t}</span>`;
+  const W = t => `<span class="text-white">${t}</span>`;
+
+  const commands = {
+    help: () => [
+      `${W('Available commands:')}`,
+      `  ${G('about')}          who I am`,
+      `  ${G('list --skills')}  skills overview`,
+      `  ${G('projects')}       featured projects`,
+      `  ${G('junction')}       my Junction 2026 status`,
+      `  ${G('contact')}        how to reach me`,
+      `  ${G('whoami')}  ${G('date')}  ${G('clear')}`
+    ],
+    about: () => [
+      `${W('Franciszek Glab')} - 15 y/o developer & hardware builder`,
+      `Location : Helsinki, Finland`,
+      `Focus    : code + physical hardware (Arduino, 3D printing, IoT)`,
+      `Mission  : build things that actually move, blink and measure.`,
+      `Next     : Junction hackathon - team secured ${G('✔')}`
+    ],
+    'list --skills': () => [
+      `${G('[hardware]')}  Arduino, sensors, circuits, 3D printing, CAD`,
+      `${G('[languages]')} Python`,
+      `${G('[tools]')}     GitHub, Slicer software, VS Code, Arduino IDE`
+    ],
+    projects: () => [
+      `${G('1.')} Coin Capsule Holder - 3D-printed holder for 5 coin capsules`,
+      `   https://github.com/franek-creator/coin-capsule-holder`,
+      `${W('more coming soon...')}`
+    ],
+    junction: () => [
+      `${W('Junction 2026')} status: ${G('TEAM SECURED')}`,
+      `Ready to build something cool!`
+    ],
+    contact: () => [
+      `github  : github.com/franek-creator`,
+      `email   : franciszekcreator@gmail.com`
+    ],
+    whoami: () => [`franciszek - builder, tinkerer, hackathon participant`],
+    date: () => [new Date().toString()],
+  };
+
+  commands.skills = commands['list --skills'];
+
+  function addLine(html) {
+    const d = document.createElement('div'); d.innerHTML = html || '&nbsp;'; d.className = 'whitespace-pre-wrap break-words';
+    out.appendChild(d); term.scrollTop = term.scrollHeight;
+  }
+
+  async function printLines(lines) {
+    for (const l of lines) { addLine(l); await sleep(70); }
+  }
+
+  async function typeCommand(cmd) {
+    typingRow.classList.remove('hidden'); typingRow.classList.add('flex');
+    promptRow.classList.add('hidden'); promptRow.classList.remove('flex');
+    typingEl.textContent = '';
+    for (const ch of cmd) { typingEl.textContent += ch; await sleep(45 + Math.random() * 50); }
+    await sleep(250);
+    typingEl.textContent = '';
+  }
+
+  async function run(cmd, simulated = false) {
+    busy = true;
+    if (simulated) await typeCommand(cmd);
+    addLine(`<span class="text-hacker">${PROMPT}</span> <span class="text-white">${esc(cmd)}</span>`);
+    const c = cmd.trim().toLowerCase();
+    if (c === 'clear') { out.innerHTML = ''; }
+    else if (commands[c]) { await printLines(commands[c]()); }
+    else if (c) { addLine(`<span class="text-red-400">command not found:</span> ${esc(cmd)} (type ${G('help')})`); }
+    addLine('');
+    showPrompt();
+    busy = false;
+  }
+
+  function showPrompt() {
+    typingRow.classList.add('hidden'); typingRow.classList.remove('flex');
+    promptRow.classList.remove('hidden'); promptRow.classList.add('flex');
+    term.scrollTop = term.scrollHeight;
+  }
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !busy) {
+      const v = input.value; input.value = '';
+      if (v.trim()) { history.push(v); hIdx = history.length; }
+      run(v);
+    } else if (e.key === 'ArrowUp') {
+      if (hIdx > 0) { hIdx--; input.value = history[hIdx]; } e.preventDefault();
+    } else if (e.key === 'ArrowDown') {
+      if (hIdx < history.length - 1) { hIdx++; input.value = history[hIdx]; } else { hIdx = history.length; input.value = ''; } e.preventDefault();
+    }
+  });
+
+  document.querySelectorAll('.cmd').forEach(b => b.addEventListener('click', () => { if (!busy) run(b.dataset.cmd, true); }));
+
+  // Intro sequence
+  (async () => {
+    addLine(`${G('Franciszek OS v1.0')} - type ${G('help')} for commands`);
+    addLine('');
+    await sleep(500);
+    await run('about', true);
+    await sleep(300);
+    await run('list --skills', true);
+    await sleep(200);
+    showPrompt();
+  })();
+</script>
+
+</body>
+</html>
