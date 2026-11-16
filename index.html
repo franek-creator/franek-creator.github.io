@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Franciszek Glab | Developer & Hardware Builder</title>
-  <meta name="description" content="Portfolio of Franciszek Glab - 15-year-old developer and hardware tinkerer from Helsinki. Ready for Junction 2026.">
+  <meta name="description" content="Portfolio of Franciszek Glab - 15-year-old developer and hardware tinkerer from Helsinki.">
   <meta name="theme-color" content="#0a0a0f">
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -53,6 +53,8 @@
     .text-glow { text-shadow: 0 0 18px rgba(0,255,102,.45); }
     .img-slot { background: repeating-linear-gradient(45deg, rgba(255,255,255,.02) 0 10px, rgba(255,255,255,.04) 10px 20px); }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+
+    section[id] { scroll-margin-top: 5.5rem; }
   </style>
 </head>
 
@@ -89,7 +91,7 @@
   <!-- HERO / TERMINAL -->
   <section class="mb-24">
     <div class="inline-block px-3 py-1 bg-hacker/10 border border-hacker/30 text-hacker text-xs rounded-full mb-5">
-      &gt; status: ready_for_junction_2026
+      &gt; status: working_on_projects
     </div>
     <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-3">
       Franciszek <span class="text-hacker text-glow">Glab</span>
@@ -142,7 +144,7 @@
           I write firmware for <span class="text-hacker">Arduino</span> boards, wire up sensors and actuators, design parts in CAD and bring them to life on <span class="text-hacker">3D printer</span>. Then I connect everything with software - scripts, dashboards and small web tools - so that devices can talk to each other (hello, IoT).
         </p>
         <p class="text-gray-400 leading-relaxed">
-          My loop is simple: <span class="text-white">idea → prototype → print → flash → break → fix</span>. Right now I'm ready for the Junction hackathon.
+          My loop is simple: <span class="text-white">idea → prototype → print → flash → break → fix</span>.
         </p>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
@@ -231,30 +233,37 @@
     </div>
   </section>
 
-  <!-- JUNCTION 2026 -->
+  <!-- JUNCTION 2026 RECAP -->
   <section id="junction" class="mb-24 reveal">
     <div class="relative glass rounded-2xl p-8 md:p-12 border-hacker/30 overflow-hidden shadow-[0_0_80px_-30px_rgba(0,255,102,0.5)]">
       <div class="absolute -top-20 -right-20 w-72 h-72 bg-hacker/10 blur-[90px] rounded-full pointer-events-none animate-float"></div>
       <div class="relative">
         <div class="inline-flex items-center gap-2 px-3 py-1 bg-hacker/10 border border-hacker/30 text-hacker text-xs rounded-full mb-5">
-          <span class="w-2 h-2 rounded-full bg-hacker animate-pulse"></span> team: secured (ready to build)
+          <span class="w-2 h-2 rounded-full bg-hacker"></span> status: junction_2026_completed ✔
         </div>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Junction <span class="text-hacker text-glow">2026</span></h2>
         <p class="text-gray-300 max-w-2xl leading-relaxed mb-6">
-          I'm officially attending Junction 2026 with a team!
+          48 hours of intense prototyping in Helsinki. Together with my team, we built <span class="text-white font-bold">SortSight</span> — a working smart bin powered by local Edge AI that automatically classifies and physically sorts trash without internet access.
         </p>
 
         <div class="grid sm:grid-cols-2 gap-4 mb-8">
           <div class="rounded-lg border border-white/10 bg-black/30 p-4">
-            <i data-lucide="shield-check" class="w-5 h-5 text-hacker mb-2"></i>
-            <div class="text-white text-sm font-bold">Status</div>
-            <div class="text-xs text-gray-500 mt-1">Team secured, locked in and ready for the hackathon weekend.</div>
+            <i data-lucide="cpu" class="w-5 h-5 text-hacker mb-2"></i>
+            <div class="text-white text-sm font-bold">The Prototype</div>
+            <div class="text-xs text-gray-400 mt-1">Camera + local AI on Arduino UNO Q + STM32 actuator mechanism sorting bio, metal, glass, paper & plastic in real time.</div>
+          </div>
+          <div class="rounded-lg border border-white/10 bg-black/30 p-4">
+            <i data-lucide="globe" class="w-5 h-5 text-hacker mb-2"></i>
+            <div class="text-white text-sm font-bold">Bigger Vision</div>
+            <div class="text-xs text-gray-400 mt-1">The same offline sensing engine designed to scale from smart bins to drones mapping hard-to-reach pollution.</div>
           </div>
         </div>
 
-        <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 bg-hacker text-black font-bold rounded-lg hover:shadow-[0_0_30px_rgba(0,255,102,.6)] hover:-translate-y-0.5 transition">
-          <i data-lucide="mail" class="w-4 h-4"></i> Get in touch
-        </a>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 border border-hacker/40 text-hacker font-bold rounded-lg hover:bg-hacker/10 transition">
+            <i data-lucide="mail" class="w-4 h-4"></i> Get in touch
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -340,7 +349,6 @@
       `Location : Helsinki, Finland`,
       `Focus    : code + physical hardware (Arduino, 3D printing, IoT)`,
       `Mission  : build things that actually move, blink and measure.`,
-      `Next     : Junction hackathon - team secured ${G('✔')}`
     ],
     'list --skills': () => [
       `${G('[hardware]')}  Arduino, sensors, circuits, 3D printing, CAD`,
@@ -353,8 +361,8 @@
       `${W('more coming soon...')}`
     ],
     junction: () => [
-      `${W('Junction 2026')} status: ${G('TEAM SECURED')}`,
-      `Ready to build something cool!`
+      `${W('Junction 2026')} status: ${G('COMPLETED ✔')}`,
+   `48h of coding & hardware in Helsinki. Ready for the next challenge!`
     ],
     contact: () => [
       `github  : github.com/franek-creator`,
@@ -362,6 +370,15 @@
     ],
     whoami: () => [`franciszek - builder, tinkerer, hackathon participant`],
     date: () => [new Date().toString()],
+    arduino: () => [
+      `Compiling sketch...`,
+      `<span class="text-red-400">error: expected ';' before '}' token</span>`,
+      `...classic. Fixed and uploaded to UNO Q ${G('✔')}`
+    ],
+    sudo: () => [
+      `usage: sudo &lt;command&gt;`,
+      `<span class="text-red-400">You are not in the sudoers file.</span>`
+    ]
   };
 
   commands.skills = commands['list --skills'];
